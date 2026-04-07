@@ -1,0 +1,22 @@
+body { font-family: Arial, sans-serif; background: #f4f6f8; color: #111; margin: 0; padding: 20px; }
+.container { max-width: 1200px; margin: 0 auto; }
+.panel { display: flex; gap: 16px; }
+.left { flex: 2; }
+.right { flex: 1; background: #fff; padding: 12px; border-radius: 6px; height: 640px; overflow:auto }
+.video-wrapper { position: relative; background: #000; width: 100%; max-height: 640px; }
+video { width: 100%; height: auto; display: block; }
+#subtitle-layer { position: absolute; left: 0; top: 0; right: 0; bottom: 0; pointer-events: none; }
+.live-subtitle { position: absolute; pointer-events: auto; text-align: center; background: rgba(0,0,0,0.4); padding: 8px 12px; border-radius: 6px; color: #fff; cursor: move; font-weight: 500; box-shadow: 0 2px 8px rgba(0,0,0,0.3); white-space: pre-wrap; word-wrap: break-word; }
+.upload { margin-top: 8px; }
+#file { display: none; }
+.file-label { display: inline-block; padding: 8px 12px; background: #28a745; color: white; border-radius: 4px; cursor: pointer; margin-right: 8px; }
+.file-label:hover { background: #218838; }
+.file-name { display: inline-block; margin-right: 12px; color: #666; font-size: 0.9em; }
+#btnUpload, #btnExport { margin-right: 8px; padding: 8px 12px; background: #0066cc; color: white; border: none; border-radius: 4px; cursor: pointer; }
+#btnUpload:hover, #btnExport:hover { background: #0052a3; }
+#btnUpload:disabled, #btnExport:disabled { background: #ccc; cursor: not-allowed; }
+#subs-list { display: none; max-height: 300px; overflow: auto; }
+.sub-item { padding: 6px; border-bottom: 1px solid #eee; cursor: pointer; }
+.editor label { display:block; margin-top:8px; }
+.editor input[type="range"] { width: 100%; }
+.editor textarea { width: 100%; height: 80px; }

@@ -1,0 +1,66 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>English Subtitle Generator</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <div id="app" class="container">
+      <h1>English Subtitle Generator</h1>
+      <div class="panel">
+        <div class="left">
+          <div class="video-wrapper">
+            <video id="video" controls crossorigin playsinline></video>
+            <div id="subtitle-layer"></div>
+          </div>
+          <div class="upload">
+            <label for="file" class="file-label">Choose Video File</label>
+            <input id="file" type="file" accept="video/*" />
+            <span id="file-name" class="file-name"></span>
+            <button id="btnUpload">Upload & Generate</button>
+            <button id="btnExport">Export Video (burned)</button>
+          </div>
+        </div>
+        <div class="right">
+          <h3>Subtitles</h3>
+          <div id="subs-list"></div>
+          <div class="editor" id="editor">
+            <label>Text</label>
+            <textarea id="editText"></textarea>
+            <label>Font</label>
+            <select id="fontSelect">
+              <option value="Arial">Arial</option>
+              <option value="Georgia">Georgia</option>
+              <option value="Verdana">Verdana</option>
+              <option value="Trebuchet MS">Trebuchet MS</option>
+            </select>
+            <label>Color (Text)</label>
+            <input id="color" type="color" value="#ffffff" />
+            <label>Background Color</label>
+            <input id="bgColor" type="color" value="#000000" />
+            <label>Background Transparency (%)</label>
+            <input id="bgOpacity" type="range" min="0" max="100" value="60" />
+            <label>Border Color</label>
+            <input id="borderColor" type="color" value="#ffffff" />
+            <label>Border Transparency (%)</label>
+            <input id="borderOpacity" type="range" min="0" max="100" value="0" />
+            <label>Bold</label>
+            <input id="bold" type="checkbox" />
+            <label>Size</label>
+            <input id="size" type="range" min="16" max="72" value="36" />
+            <label>Position X (%)</label>
+            <input id="posX" type="range" min="0" max="100" value="50" />
+            <label>Position Y (%)</label>
+            <input id="posY" type="range" min="0" max="100" value="50" />
+            <label style="margin-top:8px"><input id="centerToggle" type="checkbox" checked /> Center subtitles</label>
+            <button id="apply">Apply to Current</button>
+            <button id="applyAll">Apply to All</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="/app.js"></script>
+  </body>
+</html>
