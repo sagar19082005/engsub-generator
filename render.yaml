@@ -1,0 +1,20 @@
+services:
+  - type: web
+    name: engsub-generator
+    runtime: node
+    buildCommand: npm install
+    startCommand: npm start
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 3000
+      - key: WHISPER_MODEL
+        value: base
+      - key: MAX_FILE_SIZE
+        value: 500
+    disk:
+      name: data
+      mountPath: /var/data
+      sizeGB: 10
+    autoDeploy: true
