@@ -3,7 +3,7 @@ const btnUpload = document.getElementById('btnUpload');
 const btnExport = document.getElementById('btnExport');
 const video = document.getElementById('video');
 const subtitleLayer = document.getElementById('subtitle-layer');
-const subsList = document.getElementById('subs-list');
+const subsList = document.querySelector('.subs-list-container');
 const fileNameEl = document.getElementById('file-name');
 
 let segments = [];
@@ -24,6 +24,13 @@ const posX = document.getElementById('posX');
 const posY = document.getElementById('posY');
 const applyBtn = document.getElementById('apply');
 const applyAllBtn = document.getElementById('applyAll');
+
+// Slider value displays
+const sizeValue = document.getElementById('sizeValue');
+const bgOpacityValue = document.getElementById('bgOpacityValue');
+const borderOpacityValue = document.getElementById('borderOpacityValue');
+const posXValue = document.getElementById('posXValue');
+const posYValue = document.getElementById('posYValue');
 
 // live subtitle element (centered by default)
 const liveSubtitle = document.createElement('div');
@@ -78,13 +85,34 @@ fileEl.addEventListener('change', () => {
   }
 });
 
+// Update slider value displays
+size.addEventListener('input', () => {
+  if (sizeValue) sizeValue.textContent = size.value;
+});
+
+bgOpacity.addEventListener('input', () => {
+  if (bgOpacityValue) bgOpacityValue.textContent = bgOpacity.value;
+});
+
+borderOpacity.addEventListener('input', () => {
+  if (borderOpacityValue) borderOpacityValue.textContent = borderOpacity.value;
+});
+
+posX.addEventListener('input', () => {
+  if (posXValue) posXValue.textContent = posX.value;
+});
+
+posY.addEventListener('input', () => {
+  if (posYValue) posYValue.textContent = posY.value;
+});
+
 btnUpload.onclick = async () => {
   if (!fileEl.files[0]) return alert('Select a video first');
   const fd = new FormData();
   fd.append('video', fileEl.files[0]);
-  btnUpload.disabled = true; btnUpload.textContent = 'Uploading...';
+  btnUpload.disabled = true; btnUpload.textContent = 'Generating...';
   const res = await fetch('/transcribe', { method: 'POST', body: fd });
-  btnUpload.disabled = false; btnUpload.textContent = 'Upload & Generate';
+  btnUpload.disabled = false; btnUpload.textContent = 'Generate Subtitles';
   if (!res.ok) {
     const errData = await res.json();
     // If rate limited, offer mock fallback
@@ -117,6 +145,7 @@ function renderSubtitles() {
 
 function renderList(){
   subsList.innerHTML = '';
+  subsList.classList.add('active');
   segments.forEach((s,i)=>{
     const el = document.createElement('div'); el.className='sub-item'; el.textContent = `${formatTime(s.start)} - ${formatTime(s.end)} : ${s.text}`;
     el.onclick = ()=> { selectedIndex = i; selectSubtitle(i); };
@@ -141,6 +170,11 @@ function selectSubtitle(i){
   const px = s.x != null ? Math.round((s.x / video.clientWidth)*100) : 50;
   const py = s.y != null ? Math.round((s.y / video.clientHeight)*100) : 50;
   posX.value = px; posY.value = py;
+  if (posXValue) posXValue.textContent = px;
+  if (posYValue) posYValue.textContent = py;
+  if (sizeValue) sizeValue.textContent = size.value;
+  if (bgOpacityValue) bgOpacityValue.textContent = bgOpacity.value;
+  if (borderOpacityValue) borderOpacityValue.textContent = borderOpacity.value;
   updateLiveSubtitle(s);
 }
 
@@ -259,7 +293,7 @@ btnExport.onclick = async ()=>{
   fd.append('styles', JSON.stringify({ default: { font: 'Arial', size: 36, color: '&H00FFFFFF', bold: false } }));
   btnExport.disabled = true; btnExport.textContent = 'Exporting...';
   const res = await fetch('/export', { method: 'POST', body: fd });
-  btnExport.disabled = false; btnExport.textContent = 'Export Video (burned)';
+  btnExport.disabled = false; btnExport.textContent = 'Export Video';
   if (!res.ok) return alert('Export failed');
   const blob = await res.blob();
   const a = document.createElement('a');

@@ -8,55 +8,152 @@
   </head>
   <body>
     <div id="app" class="container">
-      <h1>English Subtitle Generator</h1>
+      <header class="header">
+        <div class="header-content">
+          <h1>🎬 English Subtitle Generator</h1>
+          <p>Convert your videos to subtitled masterpieces</p>
+        </div>
+      </header>
+
       <div class="panel">
         <div class="left">
-          <div class="video-wrapper">
-            <video id="video" controls crossorigin playsinline></video>
-            <div id="subtitle-layer"></div>
+          <div class="video-section">
+            <div class="video-wrapper">
+              <video id="video" controls crossorigin playsinline></video>
+              <div id="subtitle-layer"></div>
+            </div>
           </div>
-          <div class="upload">
-            <label for="file" class="file-label">Choose Video File</label>
-            <input id="file" type="file" accept="video/*" />
-            <span id="file-name" class="file-name"></span>
-            <button id="btnUpload">Upload & Generate</button>
-            <button id="btnExport">Export Video (burned)</button>
+
+          <div class="upload-section">
+            <div class="upload-box">
+              <div class="upload-input-group">
+                <label for="file" class="file-label">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                    <polyline points="17 8 12 3 7 8"></polyline>
+                    <line x1="12" y1="3" x2="12" y2="15"></line>
+                  </svg>
+                  Choose Video File
+                </label>
+                <input id="file" type="file" accept="video/*" />
+                <span id="file-name" class="file-name"></span>
+              </div>
+              <div class="button-group">
+                <button id="btnUpload" class="btn btn-primary">Generate Subtitles</button>
+                <button id="btnExport" class="btn btn-secondary">Export Video</button>
+              </div>
+            </div>
           </div>
         </div>
+
         <div class="right">
-          <h3>Subtitles</h3>
-          <div id="subs-list"></div>
-          <div class="editor" id="editor">
-            <label>Text</label>
-            <textarea id="editText"></textarea>
-            <label>Font</label>
-            <select id="fontSelect">
-              <option value="Arial">Arial</option>
-              <option value="Georgia">Georgia</option>
-              <option value="Verdana">Verdana</option>
-              <option value="Trebuchet MS">Trebuchet MS</option>
-            </select>
-            <label>Color (Text)</label>
-            <input id="color" type="color" value="#ffffff" />
-            <label>Background Color</label>
-            <input id="bgColor" type="color" value="#000000" />
-            <label>Background Transparency (%)</label>
-            <input id="bgOpacity" type="range" min="0" max="100" value="60" />
-            <label>Border Color</label>
-            <input id="borderColor" type="color" value="#ffffff" />
-            <label>Border Transparency (%)</label>
-            <input id="borderOpacity" type="range" min="0" max="100" value="0" />
-            <label>Bold</label>
-            <input id="bold" type="checkbox" />
-            <label>Size</label>
-            <input id="size" type="range" min="16" max="72" value="36" />
-            <label>Position X (%)</label>
-            <input id="posX" type="range" min="0" max="100" value="50" />
-            <label>Position Y (%)</label>
-            <input id="posY" type="range" min="0" max="100" value="50" />
-            <label style="margin-top:8px"><input id="centerToggle" type="checkbox" checked /> Center subtitles</label>
-            <button id="apply">Apply to Current</button>
-            <button id="applyAll">Apply to All</button>
+          <div class="subtitles-panel">
+            <h3>📝 Subtitle List</h3>
+            <div id="subs-list" class="subs-list-container"></div>
+          </div>
+
+          <div class="editor-panel" id="editor">
+            <!-- Text Section -->
+            <div class="form-section">
+              <h4 class="section-title">Text Content</h4>
+              <div class="form-group">
+                <label for="editText">Subtitle Text</label>
+                <textarea id="editText" placeholder="Edit subtitle text here..."></textarea>
+              </div>
+            </div>
+
+            <!-- Typography Section -->
+            <div class="form-section">
+              <h4 class="section-title">Typography</h4>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="fontSelect">Font</label>
+                  <select id="fontSelect">
+                    <option value="Arial">Arial</option>
+                    <option value="Georgia">Georgia</option>
+                    <option value="Verdana">Verdana</option>
+                    <option value="Trebuchet MS">Trebuchet MS</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="size">Size</label>
+                  <input id="size" type="range" min="16" max="72" value="36" />
+                  <span id="sizeValue">36</span>px
+                </div>
+              </div>
+              <div class="form-group checkbox">
+                <input id="bold" type="checkbox" />
+                <label for="bold">Bold Text</label>
+              </div>
+            </div>
+
+            <!-- Colors Section -->
+            <div class="form-section">
+              <h4 class="section-title">Colors & Style</h4>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="color">Text Color</label>
+                  <input id="color" type="color" value="#ffffff" />
+                </div>
+                <div class="form-group">
+                  <label for="bgColor">Background</label>
+                  <input id="bgColor" type="color" value="#000000" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="bgOpacity">Background Opacity</label>
+                <div class="slider-container">
+                  <input id="bgOpacity" type="range" min="0" max="100" value="60" />
+                  <span id="bgOpacityValue">60</span>%
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="borderColor">Border Color</label>
+                  <input id="borderColor" type="color" value="#ffffff" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="borderOpacity">Border Opacity</label>
+                <div class="slider-container">
+                  <input id="borderOpacity" type="range" min="0" max="100" value="0" />
+                  <span id="borderOpacityValue">0</span>%
+                </div>
+              </div>
+            </div>
+
+            <!-- Position Section -->
+            <div class="form-section">
+              <h4 class="section-title">Position</h4>
+              <div class="form-group checkbox">
+                <input id="centerToggle" type="checkbox" checked />
+                <label for="centerToggle">Center Subtitles</label>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="posX">Position X</label>
+                  <div class="slider-container">
+                    <input id="posX" type="range" min="0" max="100" value="50" />
+                    <span id="posXValue">50</span>%
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="posY">Position Y</label>
+                  <div class="slider-container">
+                    <input id="posY" type="range" min="0" max="100" value="50" />
+                    <span id="posYValue">50</span>%
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Actions Section -->
+            <div class="form-section">
+              <div class="button-group-vertical">
+                <button id="apply" class="btn btn-primary">Apply to Current</button>
+                <button id="applyAll" class="btn btn-secondary">Apply to All</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
