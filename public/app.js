@@ -1476,10 +1476,13 @@ function updateLiveSubtitle(s, currentTime = null){
   liveSubtitle.style.flexWrap = 'initial';
   liveSubtitle.style.gap = 'initial';
   
-  const vw = video.clientWidth; 
+  const vw = video.clientWidth;
   const vh = video.clientHeight;
   const type = s.subtitleType || 'full';
-  
+
+  // Only allow clicks (like dragging) if it's not a full-screen absolute position mode.
+  liveSubtitle.style.pointerEvents = (type === 'word-type') ? 'none' : 'auto';
+
   // Base styling for standard modes
   const font = s.font || 'Arial';
   const size = (s.size || 36) + 'px';
@@ -1520,7 +1523,8 @@ function updateLiveSubtitle(s, currentTime = null){
     liveSubtitle.innerHTML = displayHTML;
     
     // Apply container styling
-    liveSubtitle.style.width = (vw * 0.8) + 'px';
+    liveSubtitle.style.width = 'max-content';
+      liveSubtitle.style.maxWidth = (vw * 0.8) + 'px';
       liveSubtitle.style.height = 'auto';
       liveSubtitle.style.left = x + 'px';
     liveSubtitle.style.top = y + 'px';
@@ -1596,7 +1600,8 @@ function updateLiveSubtitle(s, currentTime = null){
     }).join('');
     
     // Apply container styling
-    liveSubtitle.style.width = (vw * 0.8) + 'px';
+    liveSubtitle.style.width = 'max-content';
+      liveSubtitle.style.maxWidth = (vw * 0.8) + 'px';
       liveSubtitle.style.height = 'auto';
       liveSubtitle.style.left = x + 'px';
     liveSubtitle.style.top = y + 'px';
@@ -1615,7 +1620,8 @@ function updateLiveSubtitle(s, currentTime = null){
     liveSubtitle.innerHTML = s.text;
     
     // Apply container styling
-    liveSubtitle.style.width = (vw * 0.8) + 'px';
+    liveSubtitle.style.width = 'max-content';
+      liveSubtitle.style.maxWidth = (vw * 0.8) + 'px';
       liveSubtitle.style.height = 'auto';
       liveSubtitle.style.left = x + 'px';
     liveSubtitle.style.top = y + 'px';
