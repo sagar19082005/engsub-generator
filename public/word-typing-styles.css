@@ -1,0 +1,311 @@
+/**
+ * Word-by-Word Typing Effect Styles
+ * Progressive word reveal with smooth animations
+ */
+
+/* Individual word spans - clean and simple */
+.word-span,
+.word-item {
+  display: inline-block;
+  white-space: nowrap;
+  padding: 2px 4px;
+  margin: 2px 3px;
+  line-height: 1.4;
+  vertical-align: baseline;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+/* Animation applied ONLY when word first appears via class */
+.word-appearing {
+  animation: word-fade-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+/* Already appeared words - NO animation, just visible */
+.word-visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+}
+
+/* Fade-in animation for newly appearing words */
+@keyframes word-fade-in {
+  0% {
+    opacity: 0;
+    transform: translateY(4px) scale(0.98);
+  }
+  50% {
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+/* Hover effect for interactive word selection */
+.word-span:hover,
+.word-item:hover {
+  cursor: pointer;
+  opacity: 0.8;
+  transition: all 0.2s ease;
+}
+
+/* Selected word styling (when user selects for editing) */
+.word-span.selected {
+  background: rgba(100, 150, 255, 0.3);
+  border: 2px solid #6496FF;
+  box-shadow: 0 2px 12px rgba(100, 150, 255, 0.5);
+  transform: scale(1.05);
+}
+
+/* Draggable word styling */
+.word-span.draggable {
+  cursor: grab;
+  position: relative;
+}
+
+.word-span.draggable:active {
+  cursor: grabbing;
+  filter: brightness(0.9);
+}
+
+/* Emphasis styles for different word types */
+.word-span.emphasis {
+  font-weight: bold;
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.word-span.highlight {
+  background: rgba(255, 215, 0, 0.2);
+  border-bottom: 2px solid #FFD700;
+}
+
+.word-span.underlined {
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+
+/* Container with background styling */
+.word-typing-container.with-background {
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
+}
+
+/* Container with border styling */
+.word-typing-container.with-border {
+  border: 2px solid #ffffff;
+  border-radius: 8px;
+}
+
+/* ===== WORD STUDIO STYLES ===== */
+/* Individual word containers for Word Studio mode */
+.word-studio-container {
+  position: absolute;
+  display: inline-block;
+  white-space: nowrap;
+  user-select: none;
+}
+
+.word-studio-container.word-studio-active {
+  cursor: grab;
+}
+
+.word-studio-container.word-studio-active:active {
+  cursor: grabbing;
+}
+
+.word-studio-container.selected {
+  outline: 3px solid #6496FF;
+  outline-offset: 4px;
+  box-shadow: 0 0 16px rgba(100, 150, 255, 0.6);
+}
+
+.word-studio-container:hover {
+  filter: brightness(1.15);
+  transform: scale(1.02);
+}
+
+.word-studio-word {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+/* Numbered Words Display Mode */
+.numbered-words-container {
+  position: relative;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.numbered-word-item {
+  display: block;
+  margin: 4px auto;
+  padding: 0;
+  border: none;
+  background: transparent;
+  cursor: pointer;
+  line-height: 1.4;
+  text-align: center;
+  width: fit-content;
+}
+
+.numbered-word-item.word-appearing {
+  animation: word-fade-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.numbered-word-item.word-visible {
+  opacity: 1;
+}
+
+.numbered-word-item.selected {
+  background: rgba(100, 150, 255, 0.2);
+  border: 2px solid #6496FF;
+  border-radius: 4px;
+  padding: 5px 12px;
+  box-shadow: 0 0 12px rgba(100, 150, 255, 0.5);
+}
+
+.numbered-word-item:hover {
+  opacity: 0.8;
+}
+
+.word-text-display {
+  display: inline;
+}
+
+/* Responsive sizing */
+@media (max-width: 768px) {
+  .word-typing-container {
+    padding: 12px;
+    min-height: 50px;
+  }
+
+  .word-span,
+.word-item {
+    padding: 1px 4px;
+    margin: 0 1px;
+  }
+
+  .word-span[data-active="true"] {
+    box-shadow: 0 0 8px rgba(100, 150, 255, 0.4);
+  }
+}
+
+/* Tailwind CSS Alternative Classes */
+/* Use these classes if integrating with Tailwind CSS */
+
+.tw-word-typing-container {
+  @apply flex flex-wrap items-center justify-center gap-1 p-4 rounded-lg leading-relaxed min-h-[60px] break-words;
+}
+
+.tw-word-span {
+  @apply inline-block whitespace-nowrap px-1.5 py-0.5 mx-0.5 rounded transition-all duration-300 ease-out;
+}
+
+.tw-word-span-active {
+  @apply animate-pulse shadow-lg shadow-blue-400;
+}
+
+.tw-word-span-hover {
+  @apply hover:brightness-125 hover:-translate-y-0.5 cursor-pointer;
+}
+
+.tw-word-span-selected {
+  @apply bg-blue-300 bg-opacity-30 border-2 border-blue-400 shadow-lg shadow-blue-500 scale-105;
+}
+
+/* Positioning utilities for custom word placement */
+.word-absolute {
+  position: absolute;
+  z-index: 10;
+}
+
+.word-relative {
+  position: relative;
+}
+
+.word-fixed {
+  position: fixed;
+  z-index: 20;
+}
+
+/* Text effects */
+.text-shadow-sm {
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.text-shadow-md {
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+}
+
+.text-shadow-lg {
+  text-shadow: 3px 3px 6px rgba(0, 0, 0, 0.7);
+}
+
+.text-glow {
+  text-shadow: 0 0 10px currentColor, 0 0 20px currentColor;
+}
+
+/* Loading/skeleton state */
+.word-typing-loading {
+  background: linear-gradient(
+    90deg,
+    rgba(100, 150, 255, 0.1) 0%,
+    rgba(100, 150, 255, 0.2) 50%,
+    rgba(100, 150, 255, 0.1) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Print styles */
+@media print {
+  .word-span[data-active="true"] {
+    box-shadow: none;
+    animation: none;
+  }
+
+  .word-typing-container {
+    background: none;
+  }
+}
+
+/* Drag and drop overlay feedback */
+#subtitle-layer.drag-over {
+  outline: 2px dashed #6496FF;
+  outline-offset: -2px;
+}
+
+/* Positioned words rendered directly on subtitle-layer */
+.numbered-word-positioned {
+  display: inline-block;
+  padding: 4px 8px;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.numbered-word-positioned.word-appearing {
+  animation: word-fade-in 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.numbered-word-positioned.word-visible {
+  opacity: 1;
+  transform: scale(1);
+}
+
+.numbered-word-positioned:hover {
+  background: rgba(100, 150, 255, 0.1);
+  border-radius: 4px;
+}

@@ -118,6 +118,26 @@ video {
   word-wrap: break-word;
   backdrop-filter: blur(4px);
   transition: box-shadow 0.2s ease;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.word-customizable {
+  transition: all 0.15s ease;
+}
+
+.word-customizable:hover {
+  box-shadow: 0 0 15px rgba(255, 255, 0, 0.5);
+  transform: translate(-50%, -50%) scale(1.1) !important;
+}
+
+.live-subtitle span[data-position] {
+  position: absolute;
+  white-space: nowrap;
 }
 
 .live-subtitle:hover {
@@ -245,6 +265,64 @@ video {
   transform: translateY(0);
 }
 
+.btn-success {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+  color: white;
+  flex: 1;
+}
+
+.btn-success:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(17, 153, 142, 0.4);
+}
+
+.btn-success:active {
+  transform: translateY(0);
+}
+
+/* Special styling for customization buttons */
+#doneCustomizing {
+  background: linear-gradient(135deg, #FF6B00 0%, #FF8C00 100%) !important;
+  border: 3px solid #FF0000 !important;
+  padding: 15px 20px !important;
+  font-size: 1.1em !important;
+  font-weight: 700 !important;
+  box-shadow: 0 0 15px rgba(255, 0, 0, 0.5) !important;
+  animation: pulse-button 1s infinite;
+}
+
+#doneCustomizing:hover {
+  transform: scale(1.05) !important;
+  box-shadow: 0 0 25px rgba(255, 0, 0, 0.8) !important;
+}
+
+#startCustomizing {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%) !important;
+  padding: 12px 20px !important;
+  font-weight: 600 !important;
+}
+
+#setCurrentWord {
+  background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%) !important;
+  padding: 12px 20px !important;
+  font-weight: 600 !important;
+  border: 2px solid #11998e !important;
+}
+
+#setCurrentWord:hover {
+  transform: translateY(-2px) !important;
+  box-shadow: 0 8px 15px rgba(17, 153, 142, 0.5) !important;
+}
+
+@keyframes pulse-button {
+  0%, 100% {
+    box-shadow: 0 0 15px rgba(255, 0, 0, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 25px rgba(255, 0, 0, 0.9);
+  }
+}
+
 /* Subtitles Panel */
 .subtitles-panel {
   background: white;
@@ -287,6 +365,43 @@ video {
 .sub-item:hover {
   background: #f0f2f5;
   padding-left: 16px;
+}
+
+/* Type-specific styling */
+.sub-item.type-typing .word-highlight {
+  background: linear-gradient(120deg, #667eea, #764ba2);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 3px;
+  margin: 0 2px;
+  display: inline-block;
+  animation: pulse 0.8s ease-in-out infinite;
+}
+
+.sub-item.type-numbered .word-number {
+  background: #FFD700;
+  color: #333;
+  padding: 2px 6px;
+  border-radius: 3px;
+  margin: 0 4px;
+  display: inline-block;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+.sub-item.type-studio .word-box {
+  background: #4CAF50;
+  color: white;
+  padding: 4px 8px;
+  border-radius: 4px;
+  margin: 2px 2px;
+  display: inline-block;
+  font-weight: bold;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
 }
 
 /* Editor Panel */
@@ -500,4 +615,108 @@ video {
 .editor-panel::-webkit-scrollbar-thumb:hover,
 .subs-list-container::-webkit-scrollbar-thumb:hover {
   background: #999;
+}
+
+/* Subtitle Type Selector */
+#subtitleType {
+  padding: 12px 14px !important;
+  font-size: 1em !important;
+  border: 2px solid #667eea !important;
+  border-radius: 8px !important;
+  background: white !important;
+  color: #2c3e50 !important;
+  font-weight: 500 !important;
+  cursor: pointer !important;
+  transition: all 0.2s ease !important;
+}
+
+#subtitleType:hover {
+  border-color: #764ba2 !important;
+  box-shadow: 0 4px 12px rgba(102, 126, 234, 0.2) !important;
+}
+
+#subtitleType:focus {
+  outline: none !important;
+  border-color: #764ba2 !important;
+  box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2) !important;
+}
+
+/* Words Panel */
+.words-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border: 1px solid #e1e4e8;
+  min-height: 40px;
+}
+
+.word-button {
+  padding: 8px 12px;
+  background: white;
+  border: 2px solid #ddd;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.9em;
+  font-weight: 500;
+  transition: all 0.2s ease;
+  color: #2c3e50;
+}
+
+.word-button:hover {
+  border-color: #667eea;
+  background: #f0f4ff;
+}
+
+.word-button.selected {
+  background: #667eea;
+  color: white;
+  border-color: #667eea;
+  box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+}
+
+/* Draggable word spans in preview */
+.word-span {
+  transition: all 0.15s ease;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.word-span.word-selected {
+  cursor: grab;
+  transition: none !important;
+}
+
+.word-span.word-selected:active {
+  cursor: grabbing !important;
+}
+
+/* Word Buttons Panel for Word Type */
+.word-buttons-panel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 12px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  border: 2px dashed #667eea;
+  min-height: 50px;
+}
+
+/* Word Preview Canvas */
+#wordPreviewCanvas {
+  position: relative;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  margin: 20px 0 !important;
+}
+
+#wordPreviewText {
+  position: absolute !important;
+  user-select: none !important;
+  cursor: grab !important;
+  transition: all 0.1s ease !important;
 }

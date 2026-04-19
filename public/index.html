@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>English Subtitle Generator</title>
     <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="/word-typing-styles.css">
   </head>
   <body>
     <div id="app" class="container">
@@ -53,6 +54,21 @@
           </div>
 
           <div class="editor-panel" id="editor">
+            <!-- Subtitle Type Section - FIRST -->
+            <div class="form-section">
+              <h4 class="section-title">🎬 Subtitle Type</h4>
+              <div class="form-group">
+                <label for="segmentSubtitleType">Display Style for This Subtitle</label>
+                <select id="segmentSubtitleType">
+                  <option value="full">Full Sentence</option>
+                  <option value="typing-word">Typing Effect (Word by Word)</option>
+                  <option value="word-type">Word Type (Custom Position)</option>
+                  <option value="word-studio">Word Studio (Individual Words)</option>
+                </select>
+              </div>
+              <button id="applyType" class="btn btn-success" style="width: 100%; margin-top: 10px;">✓ Set This Subtitle Type</button>
+            </div>
+
             <!-- Text Section -->
             <div class="form-section">
               <h4 class="section-title">Text Content</h4>
@@ -60,6 +76,16 @@
                 <label for="editText">Subtitle Text</label>
                 <textarea id="editText" placeholder="Edit subtitle text here..."></textarea>
               </div>
+            </div>
+
+            <!-- Word Styling Section (Word Type) -->
+            <div class="form-section">
+              <h4 class="section-title">🎬 Word Type - Click to Customize</h4>
+              <p style="font-size: 0.85em; color: #666; margin: 0 0 10px 0;">Click a word button to customize it in the center of video</p>
+              <div id="wordButtonsPanel" class="word-buttons-panel"></div>
+              <button id="startCustomizing" class="btn btn-primary" style="width: 100%; margin-top: 10px; display: none;">🎨 Customize All Words</button>
+              <button id="doneCustomizing" class="btn btn-success" style="width: 100%; margin-top: 10px; display: none;">✅ Done Customizing - Play Video</button>
+              <button id="setCurrentWord" class="btn btn-success" style="width: 100%; margin-top: 10px; display: none;">✓ Save This Word</button>
             </div>
 
             <!-- Typography Section -->
@@ -112,6 +138,10 @@
                   <label for="borderColor">Border Color</label>
                   <input id="borderColor" type="color" value="#ffffff" />
                 </div>
+                <div class="form-group" id="studioColorGroup" style="display: none;">
+                  <label for="studioHighlightColor">Studio Highlight (Active)</label>
+                  <input id="studioHighlightColor" type="color" value="#2196F3" />
+                </div>
               </div>
               <div class="form-group">
                 <label for="borderOpacity">Border Opacity</label>
@@ -152,12 +182,14 @@
               <div class="button-group-vertical">
                 <button id="apply" class="btn btn-primary">Apply to Current</button>
                 <button id="applyAll" class="btn btn-secondary">Apply to All</button>
+                <button id="setPosition" class="btn btn-success" style="display: none;">✓ Set Position</button>
               </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <script src="/app.js"></script>
+    <script src="/word-by-word-typing.js"></script>
+    <script src="/app.js?v=6"></script>
   </body>
 </html>

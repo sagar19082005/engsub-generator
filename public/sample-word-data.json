@@ -1,0 +1,201 @@
+{
+  "subtitle_data": {
+    "sentence": "This is the world's biggest cricket bat.",
+    "segment": {
+      "start": 0.5,
+      "end": 3.5,
+      "text": "This is the world's biggest cricket bat.",
+      "words": [
+        {
+          "text": "This",
+          "start": 0.5,
+          "end": 1.0,
+          "customStyle": {
+            "color": "#ffffff",
+            "font": "Arial",
+            "size": 36,
+            "fontWeight": "normal",
+            "textDecoration": "none",
+            "x": 0,
+            "y": 0,
+            "opacity": 1
+          }
+        },
+        {
+          "text": "is",
+          "start": 1.0,
+          "end": 1.3,
+          "customStyle": {
+            "color": "#ffffff",
+            "font": "Arial",
+            "size": 36,
+            "fontWeight": "normal",
+            "textDecoration": "none",
+            "x": 0,
+            "y": 0,
+            "opacity": 1
+          }
+        },
+        {
+          "text": "the",
+          "start": 1.3,
+          "end": 1.6,
+          "customStyle": {
+            "color": "#ffffff",
+            "font": "Arial",
+            "size": 36,
+            "fontWeight": "normal",
+            "textDecoration": "none",
+            "x": 0,
+            "y": 0,
+            "opacity": 1
+          }
+        },
+        {
+          "text": "world's",
+          "start": 1.6,
+          "end": 2.0,
+          "customStyle": {
+            "color": "#FFD700",
+            "font": "Arial",
+            "size": 40,
+            "fontWeight": "bold",
+            "textDecoration": "none",
+            "x": 0,
+            "y": -5,
+            "opacity": 1
+          }
+        },
+        {
+          "text": "biggest",
+          "start": 2.0,
+          "end": 2.5,
+          "customStyle": {
+            "color": "#FF6B6B",
+            "font": "Arial",
+            "size": 44,
+            "fontWeight": "bold",
+            "textDecoration": "none",
+            "x": 0,
+            "y": -8,
+            "opacity": 1
+          }
+        },
+        {
+          "text": "cricket",
+          "start": 2.5,
+          "end": 3.0,
+          "customStyle": {
+            "color": "#4ECDC4",
+            "font": "Arial",
+            "size": 40,
+            "fontWeight": "normal",
+            "textDecoration": "none",
+            "x": 0,
+            "y": 0,
+            "opacity": 1
+          }
+        },
+        {
+          "text": "bat.",
+          "start": 3.0,
+          "end": 3.5,
+          "customStyle": {
+            "color": "#95E1D3",
+            "font": "Arial",
+            "size": 36,
+            "fontWeight": "normal",
+            "textDecoration": "none",
+            "x": 0,
+            "y": 0,
+            "opacity": 1
+          }
+        }
+      ],
+      "segmentDefaultStyle": {
+        "color": "#ffffff",
+        "font": "Arial",
+        "size": 36,
+        "fontWeight": "normal",
+        "bgColor": "#000000",
+        "bgOpacity": 0.6,
+        "textDecoration": "none",
+        "borderColor": "#ffffff",
+        "borderOpacity": 0
+      }
+    }
+  },
+  "data_structure_explanation": {
+    "title": "Word-by-Word Typing Effect Data Structure",
+    "description": "Each word in the 'words' array must contain timing information and custom styling options",
+    "fields": {
+      "text": {
+        "type": "string",
+        "required": true,
+        "description": "The word text to display"
+      },
+      "start": {
+        "type": "number",
+        "required": true,
+        "description": "Time in seconds when the word should appear"
+      },
+      "end": {
+        "type": "number",
+        "required": true,
+        "description": "Time in seconds when the word should disappear"
+      },
+      "customStyle": {
+        "type": "object",
+        "required": true,
+        "description": "Individual styling for the word",
+        "properties": {
+          "color": {
+            "type": "string",
+            "format": "hex color",
+            "default": "#ffffff",
+            "description": "Text color in hex format (e.g., #FF0000)"
+          },
+          "font": {
+            "type": "string",
+            "default": "Arial",
+            "description": "Font family name (e.g., Arial, Helvetica, Georgia)"
+          },
+          "size": {
+            "type": "number",
+            "default": 36,
+            "description": "Font size in pixels"
+          },
+          "fontWeight": {
+            "type": "string",
+            "enum": ["normal", "bold", "100", "200", "300", "400", "500", "600", "700", "800", "900"],
+            "default": "normal",
+            "description": "Font weight"
+          },
+          "textDecoration": {
+            "type": "string",
+            "enum": ["none", "underline", "overline", "line-through"],
+            "default": "none",
+            "description": "Text decoration style"
+          },
+          "x": {
+            "type": "number",
+            "default": 0,
+            "description": "Horizontal offset in pixels (relative positioning)"
+          },
+          "y": {
+            "type": "number",
+            "default": 0,
+            "description": "Vertical offset in pixels (relative positioning)"
+          },
+          "opacity": {
+            "type": "number",
+            "minimum": 0,
+            "maximum": 1,
+            "default": 1,
+            "description": "Word opacity (0 = transparent, 1 = opaque)"
+          }
+        }
+      }
+    }
+  }
+}
