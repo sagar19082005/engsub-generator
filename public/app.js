@@ -753,8 +753,9 @@ function showWordInVideoCenter(segment, wordIdx, word) {
       font-weight: ${wData.bold ? 'bold' : 'normal'};
       font-family: ${wData.font};
       padding: 10px 15px;
-      background: ${isSelected ? '#FF0000' : 'rgba(0,0,0,0.3)'};
-      border: ${isSelected ? '5px solid #00FF00' : '2px solid #fff'};
+      background: transparent;
+      border: none;
+      outline: ${isSelected ? '2px dashed #00FF00' : 'none'};
       border-radius: 8px;
       cursor: grab;
       user-select: none;
@@ -848,7 +849,6 @@ function showWordInVideoCenter(segment, wordIdx, word) {
         color._wordCustomListener = () => {
           wData.color = color.value;
           wordEl.style.color = color.value;
-          wordEl.style.borderColor = color.value;
         };
         color.addEventListener('input', color._wordCustomListener);
       }
