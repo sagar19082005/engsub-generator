@@ -42,7 +42,7 @@ app.post('/transcribe', upload.single('video'), async (req, res) => {
 app.post('/export', upload.single('video'), async (req, res) => {
   try {
     // expects JSON body fields: segments (array), styles (object), subtitleType (string)
-    const { segments, styles, subtitleType } = req.body;
+    const { segments, styles, subtitleType, vWidth, vHeight } = req.body;
     if (!req.file) return res.status(400).json({ error: 'No file uploaded' });
     const inputPath = req.file.path;
     const outputDir = path.join(__dirname, '..', 'outputs');
@@ -54,6 +54,7 @@ app.post('/export', upload.single('video'), async (req, res) => {
     const parsedSegments = typeof segments === 'string' ? JSON.parse(segments) : segments;
     console.log(`\n=== EXPORT REQUEST ===`);
     console.log(`Subtitle type: ${subtitleType || 'full'}`);
+    console.log(`Video Resolution: ${vWidth}x${vHeight}`);
     console.log(`Total segments: ${parsedSegments.length}`);
     if (parsedSegments.length > 0) {
       console.log(`First segment:`, parsedSegments[0]);
@@ -61,7 +62,7 @@ app.post('/export', upload.single('video'), async (req, res) => {
     }
 
     // burn ASS and return file
-    await burnASS(inputPath, parsedSegments, styles, outPath, subtitleType);
+    await burnASS(inputPath, parsedSegments, styles, outPath, subtitleType, vWidth, vHeight);
 
     res.download(outPath, outName, (err) => {
       if (err) console.error('Download error', err);

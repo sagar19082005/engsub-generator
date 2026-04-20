@@ -1213,9 +1213,14 @@ applyTypeBtn.onclick = ()=>{
       wordContainer.innerHTML = '';
     }
   }
+
+  // Clear previous word customizations when switching types so effects never overlap!
+  if (s.subtitleType !== newType) {
+    s.words = [];
+  }
   
   s.subtitleType = newType;
-  
+
   // INITIALIZE words array for word-type - START EMPTY!
   // Words will be created as user customizes each one
   if (newType === 'word-type' && !s.words) {
@@ -1377,23 +1382,96 @@ btnExport.onclick = async ()=>{
   fd.append('video', fileEl.files[0]);
   
   // For Word Studio mode, send individual word data
-  let exportSegments = segments.map(s => ({
-    start: s.start,
-    end: s.end,
-    text: s.text,
-    x: s.x,
-    y: s.y,
-    color: s.color,
-    font: s.font,
-    size: s.size,
-    bold: s.bold,
-    words: s.words || [] // Include per-word positioning for Word Studio
-  }));
+  const cWidth = video.clientWidth || 640;
+  const cHeight = video.clientHeight || 360;
+  const vWidth = video.videoWidth || 1280;
+  const vHeight = video.videoHeight || 720;
   
+  // Compute rendered video area inside the container (object-fit: contain)
+  const videoRatio = vWidth / vHeight;
+  const containerRatio = cWidth / cHeight;
+  
+  let renderedWidth, renderedHeight, offsetX, offsetY;
+  if (videoRatio > containerRatio) {
+    renderedWidth = cWidth;
+    renderedHeight = cWidth / videoRatio;
+    offsetX = 0;
+    offsetY = (cHeight - renderedHeight) / 2;
+  } else {
+    renderedHeight = cHeight;
+    renderedWidth = cHeight * videoRatio;
+    offsetX = (cWidth - renderedWidth) / 2;
+    offsetY = 0;
+  }
+
+  // CRITICAL: Calculate font size scaling factor
+  // ASS resolution is 1280x720, but rendered video may be smaller (e.g., 640x360)
+  // We need to scale font sizes from viewport pixels to ASS resolution
+  const fontScaleFactor = vWidth / renderedWidth;
+
+  let exportSegments = segments.map(s => {
+    let sAssX = null, sAssY = null;
+    if (s.x != null) {
+      const percentX = (s.x - offsetX) / renderedWidth;
+      sAssX = Math.round(percentX * vWidth);
+    }
+    if (s.y != null) {
+      const percentY = (s.y - offsetY) / renderedHeight;
+      sAssY = Math.round(percentY * vHeight);
+    }
+
+    // Scale font size from viewport to ASS resolution
+    const scaledSize = Math.round((s.size || 36) * fontScaleFactor);
+
+    return {
+      start: s.start,
+      end: s.end,
+      text: s.text,
+      subtitleType: s.subtitleType,
+      x: s.x,
+      y: s.y,
+      assX: sAssX,
+      assY: sAssY,
+      color: s.color,
+      bgColor: s.bgColor,
+      bgOpacity: s.bgOpacity,
+      borderColor: s.borderColor,
+      borderOpacity: s.borderOpacity,
+      studioHighlightColor: s.studioHighlightColor,
+      font: s.font,
+      size: scaledSize,
+      bold: s.bold,
+      words: (s.words || []).map(w => {
+        let wAssX = null, wAssY = null;
+        if (w.x != null) {
+          const absPxX = (50 + w.x) * cWidth / 100;
+          const pctX = (absPxX - offsetX) / renderedWidth;
+          wAssX = Math.round(pctX * vWidth);
+        }
+        if (w.y != null) {
+          const absPxY = (50 + w.y) * cHeight / 100;
+          const pctY = (absPxY - offsetY) / renderedHeight;
+          wAssY = Math.round(pctY * vHeight);
+        }
+        
+        // Scale word font size too
+        const wordScaledSize = Math.round((w.size || 36) * fontScaleFactor);
+        
+        return {
+          ...w,
+          assX: wAssX,
+          assY: wAssY,
+          size: wordScaledSize
+        };
+      })
+    };
+  });
+
   fd.append('segments', JSON.stringify(exportSegments));
-  fd.append('styles', JSON.stringify({ default: { font: 'Arial', size: 36, color: '&H00FFFFFF', bold: false } }));
-  
-  btnExport.disabled = true; 
+  fd.append('vWidth', vWidth);
+  fd.append('vHeight', vHeight);
+  // Removed subtitleType since it's now handled contextually per-segment
+
   btnExport.textContent = 'Exporting...';
   
   try {
