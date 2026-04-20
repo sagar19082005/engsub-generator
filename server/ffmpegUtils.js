@@ -49,8 +49,8 @@ function makeASS(scriptInfo) {
     const boxAlpha = Math.round((1 - bgOpacity) * 255); 
     const boxColor = `&H${boxAlpha.toString(16).padStart(2, '0')}${bgRGB.b.toString(16).padStart(2, '0').toUpperCase()}${bgRGB.g.toString(16).padStart(2, '0').toUpperCase()}${bgRGB.r.toString(16).padStart(2, '0').toUpperCase()}&`;
 
-    let outlineColor = `&H00FFFFFF`;
-    let backColor = `&HFF000000`; // Transparent drop shadow
+    let outlineColor = `&H00FFFFFF&`;
+    let backColor = `&HFF000000&`; // Transparent drop shadow
 
     if (bgOpacity > 0) {
       borderStyle = 3; // Opaque box mode
@@ -81,13 +81,13 @@ function makeASS(scriptInfo) {
     
     const tags = [];
     
-    if (ev.color && ev.color !== '&HFFFFFF&') {
+    if (ev.color) {
       tags.push(`\\c${ev.color}`);
     }
     if (ev.font && ev.font !== 'Arial') {
       tags.push(`\\fn${ev.font}`);
     }
-    if (ev.size && ev.size !== 36) {
+    if (ev.size) {
       tags.push(`\\fs${ev.size}`);
     }
     if (ev.bold) {
@@ -95,7 +95,7 @@ function makeASS(scriptInfo) {
     }
     
     // Apply background color override if different from style
-    if (ev.bgColor && ev.bgColor !== '&H00000000') {
+    if (ev.bgColor) {
       tags.push(`\\3c${ev.bgColor}`); // Override back color for outline color. wait! in BorderStyle=3, \3c changes the background BOX color!
     }
     
